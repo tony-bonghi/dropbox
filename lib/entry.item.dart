@@ -12,7 +12,7 @@ class EntryItem implements Comparable {
   EntryItem(var element) {
     id = element['id'];
     name = element['name'];
-    type = (element['.tag'].toString() == Type.file.toString()) ? Type.file : Type.folder;
+    type = (element['.tag'] == Type.file.toString()) ? Type.file : Type.folder;
     path = element['path_display'];
     isDownloadable = "true" == element['is_downloadable'];
     if (element['client_modified'] != null) {

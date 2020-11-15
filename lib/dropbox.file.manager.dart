@@ -1,4 +1,5 @@
 import 'package:dropbox/entry.item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -6,18 +7,21 @@ class DropboxFileManager {
 
   static const LIST_FOLDER_URL = "https://api.dropboxapi.com/2/files/list_folder";
   static const String DEFAULT_PATH = "/My Dropbox Move/Documents/My n-Track Recordings";
-  static DropboxFileManager singleton = DropboxFileManager();
+  static DropboxFileManager instance = DropboxFileManager();
 
   String currentPath;
 
-  static DropboxFileManager instance() {
-    return singleton;
+  Future<List<EntryItem>> refresh() async {
+    return getFileList(currentPath);
   }
 
-  Future<List<EntryItem>> refreshDropboxFileList() async {
-     return getDropboxFileList(currentPath);
+  void updateEntriesByPath(List<EntryItem> entries, String path) async {
+    List<EntryItem> items = await DropboxFileManager.instance.getFileList(path);
+    entries.clear();
+    entries.addAll(items);
   }
-  Future<List<EntryItem>> getDropboxFileList(path) async {
+
+  Future<List<EntryItem>> getFileList(path) async {
     currentPath = path;
     String LIST_FILES_REQUEST = jsonEncode({
       "path": path,
