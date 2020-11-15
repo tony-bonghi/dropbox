@@ -28,6 +28,6 @@ class EntryItem implements Comparable {
     if (type == o.type) {
       return name.compareTo(o.name);
     }
-    return (type == Type.file) ? -1 : 1;
+    return (type == Type.folder) ? -1 : 1;
   }
 }

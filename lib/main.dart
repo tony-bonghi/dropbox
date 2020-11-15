@@ -1,11 +1,15 @@
 import 'package:dropbox/dropbox.file.manager.dart';
-import 'package:dropbox/dropbox_listbox.dart';
+import 'package:dropbox/dropbox.listbox.dart';
 import 'package:dropbox/entry.item.dart';
 import 'package:flutter/material.dart';
+
+import 'file.downloader.dart';
 
 Future<void> main() async {
   List<EntryItem> items = await DropboxFileManager.instance
       .getFileList(DropboxFileManager.DEFAULT_PATH);
+  WidgetsFlutterBinding.ensureInitialized();
+  FileDownloader.instance.initialize();
   runApp(MyApp(items));
 }
 

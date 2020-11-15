@@ -1,6 +1,10 @@
 import 'package:dropbox/dropbox.file.manager.dart';
 import 'package:dropbox/entry.item.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+
 
 class DropboxList extends StatefulWidget {
   List<EntryItem> items;
@@ -14,7 +18,7 @@ class DropboxList extends StatefulWidget {
   _DropboxListState createState() => _DropboxListState(items);
 
   static List<ListTile> getListTiles(List<EntryItem> items) {
-//    items.sort((a, b) => a.compareTo(b));
+    items.sort((a, b) => a.compareTo(b));
 
     List<ListTile> tiles = List();
     for (int i = 0; i < items.length; i++) {
@@ -69,13 +73,17 @@ class _DropboxListState extends State<DropboxList> {
     }
     return new ListTile(
       onTap: () async {
-        List<EntryItem> items = await DropboxFileManager.instance.getFileList(item.path);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DropboxList(items),
-          ),
-        );
+        if (item.type == Type.folder) {
+          List<EntryItem> items = await DropboxFileManager.instance.getFileList(
+              item.path);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DropboxList(items),
+            ),
+          );
+        } else {
+        }
       },
       leading: Icon(
         (item.type == Type.folder) ? Icons.folder : Icons.my_library_music,
