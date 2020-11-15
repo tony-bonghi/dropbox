@@ -7,13 +7,14 @@ class DropboxList extends StatefulWidget {
 
   DropboxList(List<EntryItem> items) {
     this.items = items;
+    this.items.sort((a,b) => a.compareTo(b));
   }
 
   @override
   _DropboxListState createState() => _DropboxListState(items);
 
   static List<ListTile> getListTiles(List<EntryItem> items) {
-    items.sort((a, b) => a.compareTo(b));
+//    items.sort((a, b) => a.compareTo(b));
 
     List<ListTile> tiles = List();
     for (int i = 0; i < items.length; i++) {
@@ -40,14 +41,14 @@ class _DropboxListState extends State<DropboxList> {
           IconButton(
               icon: Icon(Icons.refresh),
               tooltip: 'Refresh',
-              onPressed: () => setState(() => {
+              onPressed: () => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DropboxList(items),
                       ),
                     )
-                  }))
+                  })
         ],
       ),
       body: Container(

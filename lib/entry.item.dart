@@ -10,9 +10,11 @@ class EntryItem implements Comparable {
   DateTime dateTime = DateTime.now();
 
   EntryItem(var element) {
+    if (element == null) return;
     id = element['id'];
     name = element['name'];
-    type = (element['.tag'] == Type.file.toString()) ? Type.file : Type.folder;
+    type = (element['.tag'] == 'file') ? Type.file : Type.folder;
+    print(type.toString());
     path = element['path_display'];
     isDownloadable = "true" == element['is_downloadable'];
     if (element['client_modified'] != null) {
@@ -23,12 +25,9 @@ class EntryItem implements Comparable {
   @override
   int compareTo(other) {
     EntryItem o = other as EntryItem;
-    if (name == o.name && type == o.type) {
-      return 0;
-    }
     if (type == o.type) {
       return name.compareTo(o.name);
     }
-    return (type == Type.folder && o.type == Type.file) ? -1 : 1;
+    return (type == Type.file) ? -1 : 1;
   }
 }
