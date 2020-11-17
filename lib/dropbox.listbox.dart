@@ -3,7 +3,8 @@ import 'package:dropbox/entry.item.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+
+import 'file.downloader.dart';
 
 
 class DropboxList extends StatefulWidget {
@@ -29,6 +30,8 @@ class DropboxList extends StatefulWidget {
 }
 
 class _DropboxListState extends State<DropboxList> {
+  DropboxFileManager _fileManager = DropboxFileManager.instance;
+  FileDownloader _fileDownloader = FileDownloader.instance;
   List<EntryItem> items;
 
   _DropboxListState(List<EntryItem> items) {
@@ -74,8 +77,7 @@ class _DropboxListState extends State<DropboxList> {
     return new ListTile(
       onTap: () async {
         if (item.type == Type.folder) {
-          List<EntryItem> items = await DropboxFileManager.instance.getFileList(
-              item.path);
+          List<EntryItem> items = await _fileManager.getFileList(item.path);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -83,6 +85,12 @@ class _DropboxListState extends State<DropboxList> {
             ),
           );
         } else {
+          String url = await _fileManager.getFileUrl(item.path);
+          print(url);
+          String taskId = await _fileDownloader.enqueue(
+              remotePath: url,
+              localPath: 'Download'
+          );
         }
       },
       leading: Icon(

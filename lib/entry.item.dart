@@ -12,6 +12,7 @@ class EntryItem implements Comparable {
   EntryItem(var element) {
     if (element == null) return;
     id = element['id'];
+    id = id.substring(3);
     name = element['name'];
     type = (element['.tag'] == 'file') ? Type.file : Type.folder;
     print(type.toString());

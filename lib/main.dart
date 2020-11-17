@@ -1,15 +1,16 @@
 import 'package:dropbox/dropbox.file.manager.dart';
 import 'package:dropbox/dropbox.listbox.dart';
 import 'package:dropbox/entry.item.dart';
+import 'package:dropbox/permission.utils.dart';
 import 'package:flutter/material.dart';
-
-import 'file.downloader.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 Future<void> main() async {
   List<EntryItem> items = await DropboxFileManager.instance
       .getFileList(DropboxFileManager.DEFAULT_PATH);
   WidgetsFlutterBinding.ensureInitialized();
-  FileDownloader.instance.initialize();
+  FlutterDownloader.initialize();
+  PermissionUtils.ensurePermissions();
   runApp(MyApp(items));
 }
 
@@ -22,9 +23,10 @@ class MyApp extends StatelessWidget {
     this.items = items;
   }
   @override
-  Widget build(BuildContext context) =>
-    MaterialApp(home: DropboxList(items),
+  Widget build(BuildContext context) {
+    return MaterialApp(home: DropboxList(items),
       title: 'Dropbox',
       theme: ThemeData(primarySwatch: Colors.lightBlue)
     );
+  }
 }
