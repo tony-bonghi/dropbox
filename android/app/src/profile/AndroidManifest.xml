@@ -19,7 +19,7 @@
 
     <provider
         android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
-        android:authorities="com.dropbox.downloader.flutter_downloader.provider"
+        android:authorities="com.dropbox.downloader.flutter_downloader.fileProvider"
         android:exported="false"
         android:grantUriPermissions="true">
         <meta-data
@@ -28,7 +28,7 @@
     </provider>
     <provider
         android:name="androidx.core.content.FileProvider"
-        android:authorities="com.dropbox.downloader.downloader.provider"
+        android:authorities="com.dropbox.downloader.provider"
         android:exported="false"
         android:grantUriPermissions="true"
         tools:replace="android:authorities">

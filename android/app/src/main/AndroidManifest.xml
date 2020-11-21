@@ -2,8 +2,8 @@
     package="com.dropbox.downloader">
    <application
        android:label="dropbox"
-       android:requestLegacyExternalStorage="true">
-       <!-- android:icon="@mipmap-hdpi/ic_launcher" -->
+       android:requestLegacyExternalStorage="true"
+       android:icon="@mipmap/ic_launcher1_playstore">
     <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

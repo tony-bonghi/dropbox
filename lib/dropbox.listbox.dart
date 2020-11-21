@@ -89,16 +89,10 @@ class _DropboxListState extends State<DropboxList> {
           );
         } else {
           PermissionUtils.ensurePermissions();
-
-          // FileProvider.getUriForFile(Objects.requireNonNull(context,
-          //                      BuildConfig.APPLICATION_ID + ".provider", file);
-          Directory topLevelDir = await getExternalStorageDirectory();
-
           String url = await _fileManager.getFileUrl(item.path);
-          print(url);
           String taskId = await _fileDownloader.enqueue(
               remotePath: url,
-              localPath: 'Download'
+              localPath: ''
           );
         }
       },
