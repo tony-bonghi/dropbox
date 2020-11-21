@@ -1,21 +1,40 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dropbox">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.dropbox.downloader">
+
+    <application>
+        android:name="DropboxDownloader"
+        android:requestLegacyExternalStorage="true"
+    </application>
+
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <provider
         android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
-        android:authorities="${applicationId}.flutter_downloader.provider"
+        android:authorities="com.dropbox.downloader.flutter_downloader.provider"
         android:exported="false"
         android:grantUriPermissions="true">
         <meta-data
             android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/provider_paths"/>
+            android:resource="@xml/file_paths"/>
+    </provider>
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="com.dropbox.downloader.downloader.provider"
+        android:exported="false"
+        android:grantUriPermissions="true"
+        tools:replace="android:authorities">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths"
+            tools:replace="android:resource" />
     </provider>
 </manifest>

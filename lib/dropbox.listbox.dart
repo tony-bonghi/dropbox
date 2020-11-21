@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dropbox/dropbox.file.manager.dart';
 import 'package:dropbox/entry.item.dart';
+import 'package:dropbox/permission.utils.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:path_provider/path_provider.dart';
+//import 'package:file_downloader/file_downloader.dart';
 
 import 'file.downloader.dart';
 
@@ -85,6 +88,12 @@ class _DropboxListState extends State<DropboxList> {
             ),
           );
         } else {
+          PermissionUtils.ensurePermissions();
+
+          // FileProvider.getUriForFile(Objects.requireNonNull(context,
+          //                      BuildConfig.APPLICATION_ID + ".provider", file);
+          Directory topLevelDir = await getExternalStorageDirectory();
+
           String url = await _fileManager.getFileUrl(item.path);
           print(url);
           String taskId = await _fileDownloader.enqueue(
